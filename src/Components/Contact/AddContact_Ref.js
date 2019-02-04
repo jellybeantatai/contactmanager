@@ -1,48 +1,39 @@
 import React, { Component } from "react";
-import {Consumer} from '../../Context';
-import uuid from 'uuid';
 
 class AddContact extends Component {
-  state = {
-    name: "",
-    email: "",
-    phone: ""
-  };
 
-  onChange = e => this.setState({ [e.target.name]: e.target.value });
+  constructor(props){
+    super(props);
+    this.nameInput = React.createRef();
+    this.emailInput = React.createRef();
+    this.phoneInput = React.createRef();
+  }
 
-  onSubmit = (dispatch,e) => {
+  onSubmit = e => {
     e.preventDefault();
-    const {name,email,phone} = this.state;
-    const newContact = {
-      id : uuid(),
-      name,
-      email,
-      phone
+    const contact = {
+      name : this.nameInput.current.value,
+      email : this.emailInput.current.value,
+      phone : this.phoneInput.current.value
     }
 
-    dispatch({type:'ADD_CONTACT',payload:newContact})
-
-    //Clear the state
-    this.setState({
-      name : '',
-      email : '',
-      phone : ''
-    })
+    console.log(contact)
   };
 
-  render() {
-    const { name, email, phone } = this.state;
+  static defaultProps = {
+    name:'John Doe',
+    email : 'john@yahoo.com',
+    phone : '9999999999'
+  }
 
-    return(
-      <Consumer>
-        {value => {
-          const {dispatch} = value;
-          return(
-            <div className="card mb-3">
+  render() {
+    const { name, email, phone } = this.props;
+
+    return (
+      <div className="card mb-3">
         <div className="card-header">Add Contact</div>
         <div className="card-body">
-          <form onSubmit={this.onSubmit.bind(this,dispatch)}>
+          <form onSubmit={this.onSubmit}>
             <div className="form-group">
               <label htmlFor="name">Name</label>
               <input
@@ -50,8 +41,8 @@ class AddContact extends Component {
                 className="form-control form-control-lg"
                 name="name"
                 placeholder="Enter Name..."
-                value={name}
-                onChange={this.onChange}
+                defaultValue={name}
+                ref = {this.nameInput}
               />
               <label htmlFor="email">Email</label>
               <input
@@ -59,8 +50,8 @@ class AddContact extends Component {
                 className="form-control form-control-lg"
                 name="email"
                 placeholder="Enter your email..."
-                value={email}
-                onChange={this.onChange}
+                defaultValue={email}
+                ref = {this.emailInput}
               />
               <label htmlFor="phone">Phone</label>
               <input
@@ -68,8 +59,8 @@ class AddContact extends Component {
                 className="form-control form-control-lg"
                 name="phone"
                 placeholder="Enter your phone number...."
-                value={phone}
-                onChange={this.onChange}
+                defaultValue={phone}
+                ref = {this.phoneInput}
               />
               <input
                 type="submit"
@@ -80,10 +71,7 @@ class AddContact extends Component {
           </form>
         </div>
       </div>
-          );
-        }}
-      </Consumer>
-    )
+    );
   }
 }
 
