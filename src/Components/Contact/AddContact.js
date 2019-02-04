@@ -75,6 +75,7 @@ class AddContact extends Component {
                 type="submit"
                 value="Add Contact"
                 className="btn btn-light btn-block"
+                style = {{marginTop:'20px'}}
               />
             </div>
           </form>
