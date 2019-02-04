@@ -11,11 +11,11 @@ const reducer = (state, action) => {
           contact => contact.id !== action.payload
         )
       };
-      case "ADD_CONTACT":
+    case "ADD_CONTACT":
       return {
         ...state,
         contacts: [action.payload, ...state.contacts]
-      };  
+      };
     default:
       return state;
   }
@@ -28,18 +28,6 @@ export class Provider extends Component {
         id: 1,
         name: "John Doe",
         email: "jdoe@gmail.com",
-        phone: "8989828282"
-      },
-      {
-        id: 2,
-        name: "Albert Einstein",
-        email: "eeqmc2@gmail.com",
-        phone: "8989828282"
-      },
-      {
-        id: 3,
-        name: "Thomas Alva Edison",
-        email: "lightbulbs@gmail.com",
         phone: "8989828282"
       }
     ],

@@ -1,8 +1,9 @@
+// ###############################  THIS FILE IS NOT BEING USED PRESENTLY. ONLY FOR DEMO PURPOSE ################################
+
 import React, { Component } from "react";
 
 class AddContact extends Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
     this.nameInput = React.createRef();
     this.emailInput = React.createRef();
@@ -12,19 +13,19 @@ class AddContact extends Component {
   onSubmit = e => {
     e.preventDefault();
     const contact = {
-      name : this.nameInput.current.value,
-      email : this.emailInput.current.value,
-      phone : this.phoneInput.current.value
-    }
+      name: this.nameInput.current.value,
+      email: this.emailInput.current.value,
+      phone: this.phoneInput.current.value
+    };
 
-    console.log(contact)
+    console.log(contact);
   };
 
   static defaultProps = {
-    name:'John Doe',
-    email : 'john@yahoo.com',
-    phone : '9999999999'
-  }
+    name: "John Doe",
+    email: "john@yahoo.com",
+    phone: "9999999999"
+  };
 
   render() {
     const { name, email, phone } = this.props;
@@ -42,7 +43,7 @@ class AddContact extends Component {
                 name="name"
                 placeholder="Enter Name..."
                 defaultValue={name}
-                ref = {this.nameInput}
+                ref={this.nameInput}
               />
               <label htmlFor="email">Email</label>
               <input
@@ -51,7 +52,7 @@ class AddContact extends Component {
                 name="email"
                 placeholder="Enter your email..."
                 defaultValue={email}
-                ref = {this.emailInput}
+                ref={this.emailInput}
               />
               <label htmlFor="phone">Phone</label>
               <input
@@ -60,7 +61,7 @@ class AddContact extends Component {
                 name="phone"
                 placeholder="Enter your phone number...."
                 defaultValue={phone}
-                ref = {this.phoneInput}
+                ref={this.phoneInput}
               />
               <input
                 type="submit"
