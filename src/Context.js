@@ -17,6 +17,15 @@ const reducer = (state, action) => {
         ...state,
         contacts: [action.payload, ...state.contacts]
       };
+    case "EDIT_CONTACT":
+      return {
+        ...state,
+        contacts: state.contacts.map(contact =>
+          contact.id === action.payload.id
+            ? (contact = action.payload)
+            : contact
+        )
+      };
     default:
       return state;
   }
@@ -38,24 +47,25 @@ export class Provider extends Component {
   //     }))
   // }
 
-  componentDidMount() {
-    axios.get("https://jsonplaceholder.typicode.com/users").then(res =>
-      this.setState({
-        contacts: res.data
-      })
-    );
+  async componentDidMount() {
+    const res = await axios.get("https://jsonplaceholder.typicode.com/users");
+    this.setState({
+      contacts: res.data
+    });
   }
 
   // componentDidMount() {
   //   axios
   //     .get(
-  //       "https://www.jsonstore.io/60d4fce2affca78d857d97edab858bc0912637f0697347ea684d3ec7a95426bf"
+  //       "https://www.jsonstore.io/1599588efc61e91c3996f5c90106516463a3c24fb49796dd5ab4fd7a457172d6"
   //     )
-  //     .then(res =>
-  //       this.setState({
-  //         contacts: res.data.result.contacts
-  //       })
-  //     );
+  //     .then(res => {
+  //       if (res.data.result == null) return;
+  //       else
+  //         this.setState({
+  //           contacts: res.data.result.contacts
+  //         });
+  //     });
   // }
 
   render() {

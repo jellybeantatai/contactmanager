@@ -1,16 +1,27 @@
 import React, { Component } from "react";
 import { Consumer } from "../../Context";
-import uuid from "uuid";
 import TextInputGroup from "../Layout/TextInputGroup";
 import axios from "axios";
 
-class AddContact extends Component {
+class EditContact extends Component {
   state = {
     name: "",
     email: "",
     phone: "",
     errors: {}
   };
+
+  async componentDidMount() {
+    const { id } = this.props.match.params;
+    const res = await axios.get(
+      `https://jsonplaceholder.typicode.com/users/${id}`
+    );
+    const contact = res.data;
+
+    this.setState({
+      ...contact
+    });
+  }
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
@@ -39,15 +50,19 @@ class AddContact extends Component {
     }
     // ------------------------------------------------
 
-    const newContact = {
-      id: uuid(),
+    const updateContact = {
       name,
       email,
       phone
     };
+    const { id } = this.props.match.params;
 
-    await axios.post("https://jsonplaceholder.typicode.com/users/", newContact);
-    dispatch({ type: "ADD_CONTACT", payload: newContact });
+    const res = await axios.put(
+      `https://jsonplaceholder.typicode.com/users/${id}`,
+      updateContact
+    );
+
+    dispatch({ type: "EDIT_CONTACT", payload: res.data });
 
     //Clear the state
     this.setState({
@@ -71,7 +86,7 @@ class AddContact extends Component {
             <div className="card mb-3">
               <div className="card-header">
                 <h1 className="display-4 mb-2">
-                  Add new
+                  Edit
                   <span className="text-danger"> Contact </span>
                 </h1>
               </div>
@@ -105,7 +120,7 @@ class AddContact extends Component {
                   <div className="form-group">
                     <input
                       type="submit"
-                      value="Add Contact"
+                      value="Update Contact"
                       className="btn btn-light btn-block"
                       style={{ marginTop: "20px" }}
                     />
@@ -120,4 +135,4 @@ class AddContact extends Component {
   }
 }
 
-export default AddContact;
+export default EditContact;
